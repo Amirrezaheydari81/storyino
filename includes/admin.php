@@ -65,26 +65,6 @@ function storyino_render_settings_page() {
 
     $ids = storyino_get_option_ids();
     ?>
-    <style>
- .storyino-layout{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px}
-.storyino-panel{flex:1 1 460px;background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:18px;box-sizing:border-box}
-.storyino-panel h2{margin-top:0}
-.storyino-shortcode-item{border:1px solid #e5e7eb;background:#fafafa;border-radius:8px;padding:12px;margin-bottom:12px}
-.storyino-shortcode-item strong{display:block;margin-bottom:4px}
-.storyino-shortcode-item p{margin:0 0 10px;color:#666}
-.storyino-shortcode-row{display:flex;gap:8px;align-items:center}
-.storyino-shortcode-row code{flex:1;display:block;direction:ltr;text-align:left;background:#fff;border:1px solid #dcdcde;padding:8px 10px;border-radius:6px;font-size:12px;overflow-x:auto;white-space:nowrap}
-.storyino-copy{flex-shrink:0}
-.storyino-copied{background:#00a32a!important;border-color:#00a32a!important;color:#fff!important}
-.storyino-table{width:100%;border-collapse:collapse;margin-top:10px}
-.storyino-table th,.storyino-table td{border:1px solid #e5e7eb;padding:8px;text-align:right}
-.storyino-table code{direction:ltr;display:inline-block}
-.storyino-note{background:#f0f6fc;border:1px solid #c3c4c7;border-radius:8px;padding:10px 12px;margin-top:12px}
-@media (max-width: 1200px) {
-.storyino-layout{flex-direction:column}
-}
-    </style>
-
     <div class="wrap storyino-admin">
         <h1><?php esc_html_e('Storyino', 'storyino'); ?></h1>
 
@@ -96,7 +76,7 @@ function storyino_render_settings_page() {
 
         <div class="storyino-layout">
             <div class="storyino-panel">
-                <h2><?php esc_html_e('تنظیمات رسانه', 'storyino'); ?></h2>
+                <h2><?php esc_html_e('تنظیمات استوری', 'storyino'); ?></h2>
 
                 <p>
                     <?php esc_html_e('تصویر یا ویدیو را از کتابخانه رسانه انتخاب کن. تعداد نامحدود است و با کشیدن می‌توانی ترتیب را عوض کنی.', 'storyino'); ?>
@@ -135,8 +115,9 @@ function storyino_render_settings_page() {
                     </p>
                 </form>
             </div>
+                                <!-- ۲) شورت‌کدها -->
 
-            <?php storyino_render_shortcodes_docs($ids); ?>
+                            <?php storyino_render_shortcodes_docs($ids); ?>
         </div>
     </div>
 
