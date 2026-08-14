@@ -269,7 +269,7 @@ function storyino_render_shortcodes_docs($ids) {
         </table>
 
         <h3 style="margin-top:18px;"><?php esc_html_e('نمونه‌های آماده', 'storyino'); ?></h3>
-
+<div class="storyino-shortcode-grid">
         <?php foreach ($examples as $example) : ?>
             <div class="storyino-shortcode-item">
                 <strong><?php echo esc_html($example['title']); ?></strong>
@@ -283,7 +283,7 @@ function storyino_render_shortcodes_docs($ids) {
                 </div>
             </div>
         <?php endforeach; ?>
-
+</div>
         <div class="storyino-note">
             <?php esc_html_e('اگر از صفحه‌سازهایی مثل المنتور استفاده می‌کنی، شورت‌کد را داخل ویجت Shortcode یا HTML قرار بده.', 'storyino'); ?>
         </div>

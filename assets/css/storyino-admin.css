@@ -363,3 +363,12 @@
 .storyino-admin * {
   font-family: 'Vazirmatn', system-ui, sans-serif !important;
 }
+.storyino-shortcode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 12px;
+}
+
+.storyino-shortcode-grid .storyino-shortcode-item {
+  margin-bottom: 0;
+}
