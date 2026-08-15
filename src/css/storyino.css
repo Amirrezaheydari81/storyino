@@ -1,0 +1,393 @@
+.storyino-no-scroll {
+  overflow: hidden;
+}
+
+/* ===== دکمه اصلی ===== */
+button.storyino-button,
+.storyino-button {
+  all: unset !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 12px 20px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(
+    45deg,
+    #feda75 0%,
+    #fa7e1e 20%,
+    #d62976 45%,
+    #962fbf 70%,
+    #4f5bd5 100%
+  ) !important;
+  background-size: 220% 220% !important;
+  background-position: 0% 50% !important;
+  color: #fff !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+  white-space: nowrap !important;
+  box-shadow: 0 10px 30px rgba(214, 41, 118, 0.28) !important;
+  outline: none !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  transition:
+    background-position 0.25s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease !important;
+}
+
+button.storyino-button:hover,
+.storyino-button:hover {
+  opacity: 1 !important;
+  background-position: 100% 50% !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 14px 35px rgba(214, 41, 118, 0.35) !important;
+}
+
+button.storyino-button:active,
+.storyino-button:active {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  box-shadow: 0 8px 20px rgba(214, 41, 118, 0.25) !important;
+}
+
+button.storyino-button:focus-visible,
+.storyino-button:focus-visible {
+  outline: 2px solid #d62976 !important;
+  outline-offset: 3px !important;
+}
+
+button.storyino-button::before,
+button.storyino-button::after,
+.storyino-button::before,
+.storyino-button::after {
+  content: none !important;
+  display: none !important;
+}
+
+.storyino-button-dot {
+  display: none !important;
+}
+
+/* ===== دکمه آیکونی ===== */
+button.storyino-button.storyino-button-icon,
+.storyino-button.storyino-button-icon {
+  width: 52px !important;
+  height: 52px !important;
+  padding: 0 !important;
+  border: 3px solid transparent !important;
+  border-radius: 50% !important;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5)
+      border-box !important;
+  box-shadow: 0 8px 24px rgba(214, 41, 118, 0.25) !important;
+  display: inline-grid !important;
+  place-items: center !important;
+}
+
+button.storyino-button.storyino-button-icon:hover,
+.storyino-button.storyino-button-icon:hover {
+  transform: translateY(-2px) scale(1.04) !important;
+  background-position: 100% 50% !important;
+}
+
+/* ===== آیکون SVG ===== */
+button.storyino-button.storyino-button-icon svg,
+.storyino-button.storyino-button-icon svg {
+  width: 36px !important;
+  height: 36px !important;
+  fill: none !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+button.storyino-button.storyino-button-icon svg path,
+.storyino-button.storyino-button-icon svg path {
+  fill: none !important;
+  stroke: #d62976 !important;
+  stroke-width: 2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  transition: stroke 0.2s ease !important;
+}
+
+button.storyino-button.storyino-button-icon:hover svg path,
+.storyino-button.storyino-button-icon:hover svg path {
+  stroke: #962fbf !important;
+}
+
+/* ===== Overlay ===== */
+.storyino-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+.storyino-story {
+  position: relative;
+  width: min(100%, 430px, calc(100dvh * 9 / 16));
+  aspect-ratio: 9 / 16;
+  background: #000;
+  overflow: hidden;
+  border-radius: 24px !important;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 500px) {
+  .storyino-overlay {
+    padding: 0;
+  }
+  .storyino-story {
+    width: 100vw;
+    height: 100dvh;
+    aspect-ratio: auto;
+    border-radius: 0 !important;
+  }
+}
+
+/* ===== Segments ===== */
+.storyino-segments {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 6px;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.storyino-segments i {
+  flex: 1;
+  height: 3px;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.28);
+  overflow: hidden;
+}
+
+.storyino-segments b {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 999px !important;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+[dir="rtl"] .storyino-segments b {
+  transform-origin: right center;
+}
+
+/* ===== Media ===== */
+.storyino-media,
+.storyino-media img,
+.storyino-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.storyino-media img,
+.storyino-media video {
+  opacity: 0;
+  transform: scale(1.01);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease;
+}
+
+.storyino-media img.storyino-show,
+.storyino-media video.storyino-show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===== Loader ===== */
+.storyino-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.storyino-loader-box {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+.storyino-spinner {
+  width: 34px;
+  height: 34px;
+  border-radius: 50% !important;
+  border: 2.5px solid rgba(255, 255, 255, 0.22);
+  border-top-color: #fff;
+  animation: storyino-spin 0.8s linear infinite;
+}
+
+.storyino-percent {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 12px;
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+}
+
+.storyino-hidden {
+  display: none !important;
+}
+
+/* ===== Close ===== */
+.storyino-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 12;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50% !important;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+[dir="rtl"] .storyino-close {
+  right: auto;
+  left: 12px;
+}
+
+/* ===== Nav ===== */
+.storyino-nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 35%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 11;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button.storyino-nav,
+button.storyino-nav:hover,
+button.storyino-nav:focus,
+button.storyino-nav:active,
+button.storyino-nav:focus-visible {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.storyino-prev {
+  left: 0;
+  right: auto;
+}
+.storyino-next {
+  right: 0;
+  left: auto;
+}
+[dir="rtl"] .storyino-prev {
+  left: auto;
+  right: 0;
+}
+[dir="rtl"] .storyino-next {
+  right: auto;
+  left: 0;
+}
+
+/* ===== Link Button ===== */
+.storyino-link-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 13;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.storyino-link-btn:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.storyino-link-btn:active {
+  transform: translateY(0);
+}
+
+@keyframes storyino-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* ===== انیمیشن چرخش آیکون ===== */
+button.storyino-button.storyino-animated svg,
+.storyino-button.storyino-animated svg {
+  animation: storyino-icon-spin 5s linear infinite !important;
+}
+
+@keyframes storyino-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button.storyino-button.storyino-animated svg,
+  .storyino-button.storyino-animated svg {
+    animation: none !important;
+  }
+}

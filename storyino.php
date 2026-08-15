@@ -26,16 +26,18 @@ if (is_admin()) {
 }
 
 add_action('wp_enqueue_scripts', function () {
+    $suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
+
     wp_register_style(
         'storyino',
-        STORYINO_URL . 'assets/css/storyino.css',
+        STORYINO_URL . "assets/css/storyino{$suffix}.css",
         [],
         STORYINO_VERSION
     );
 
     wp_register_script(
         'storyino',
-        STORYINO_URL . 'assets/js/storyino.js',
+        STORYINO_URL . "assets/js/storyino{$suffix}.js",
         [],
         STORYINO_VERSION,
         true

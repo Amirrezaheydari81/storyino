@@ -1,0 +1,18 @@
+{
+    "name": "storyino",
+    "version": "1.0.0",
+    "description": "Instagram-style stories for WordPress",
+    "private": true,
+    "scripts": {
+        "build": "node build.js",
+        "watch": "node build.js --watch",
+        "dev": "node build.js --watch",
+        "clean": "rimraf assets"
+    },
+    "devDependencies": {
+        "esbuild": "^0.24.0",
+        "clean-css": "^5.3.3",
+        "chokidar": "^4.0.1",
+        "rimraf": "^6.0.1"
+    }
+}
