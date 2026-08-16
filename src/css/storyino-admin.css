@@ -1,4 +1,14 @@
-/* ===== Vazirmatn Font ===== */
+/*
+ * Isolated Tailwind CSS v4 for the Storyino admin screen only.
+ *
+ * Isolation:
+ * - Loaded only on toplevel_page_storyino-settings
+ * - No Preflight (would reset WP admin / media modal / notices)
+ * - prefix(stn) so utilities and CSS variables never collide with themes or other plugins
+ * - important utilities beat WP admin color schemes without styling core chrome
+ * - source(none) + explicit @source so frontend files are not scanned
+ */
+
 @font-face {
   font-family: "Vazirmatn";
   font-style: normal;
@@ -7,565 +17,388 @@
   src: url("../fonts/Vazirmatn-Medium.woff2") format("woff2");
 }
 
-/* ===== Root / Layout ===== */
-.storyino-admin {
-  max-width: 1200px;
+@font-face {
+  font-family: "Vazirmatn";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/Vazirmatn-Medium.woff2") format("woff2");
 }
 
-.storyino-admin,
-.storyino-admin * {
-  font-family: "Vazirmatn", system-ui, sans-serif !important;
-}
-
-.storyino-admin h1 {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 26px;
-  font-weight: 800;
-  color: #0f172a;
-}
-
-.storyino-admin h1::before {
-  content: "";
-  width: 14px;
-  height: 34px;
-  border-radius: 999px !important;
-  background: linear-gradient(180deg, #feda75, #fa7e1e, #d62976, #962fbf);
-  transform: rotate(20deg);
-}
-
-.storyino-layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  align-items: start;
-  margin-top: 20px;
-}
-
-/* ===== Panels ===== */
-.storyino-panel {
-  background: #fff;
-  border: 1px solid #eef0f3;
-  border-radius: 16px !important;
-  padding: 24px;
-  box-shadow:
-    0 1px 2px rgba(16, 24, 40, 0.04),
-    0 8px 24px rgba(16, 24, 40, 0.06);
-}
-
-.storyino-panel h2 {
-  margin: 0 0 8px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid #f1f2f4;
-  font-size: 18px;
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.storyino-panel h3 {
-  margin: 20px 0 10px;
-  font-size: 14px;
-  font-weight: 700;
-  color: #334155;
-}
-
-.storyino-panel p {
-  color: #64748b;
-  font-size: 13px;
-  line-height: 1.9;
-}
-
-/* ===== Toolbar & Buttons ===== */
-.storyino-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 18px 0;
-}
-
-#storyino-open-media {
-  background: linear-gradient(
-    45deg,
-    #feda75,
-    #fa7e1e,
-    #d62976,
-    #962fbf,
-    #4f5bd5
-  ) !important;
-  background-size: 220% 220% !important;
-  background-position: 0% 50% !important;
-  border: 0 !important;
-  border-radius: 999px !important;
-  color: #fff !important;
-  text-shadow: none !important;
-  box-shadow: 0 6px 18px rgba(214, 41, 118, 0.25) !important;
-  height: 40px !important;
-  padding: 0 22px !important;
-  font-weight: 600 !important;
-  line-height: 40px !important;
-  cursor: pointer;
-  transition:
-    background-position 0.25s ease,
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-#storyino-open-media:hover {
-  background-position: 100% 50% !important;
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(214, 41, 118, 0.32) !important;
-}
-
-.storyino-admin button[name="storyino_save"] {
-  background: #4e9f3d !important;
-  border: 0 !important;
-  border-radius: 999px !important;
-  color: #fff !important;
-  text-shadow: none !important;
-  box-shadow: none !important;
-  height: 40px !important;
-  padding: 0 26px !important;
-  font-weight: 600 !important;
-  line-height: 40px !important;
-  cursor: pointer;
-  transition: opacity 0.15s ease;
-}
-
-.storyino-admin button[name="storyino_save"]:hover {
-  opacity: 0.88;
-}
-
-.storyino-count {
-  background: #f1f5f9;
-  color: #475569;
-  padding: 6px 14px;
-  border-radius: 999px !important;
-  font-size: 12px;
+@font-face {
+  font-family: "Vazirmatn";
+  font-style: normal;
   font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/Vazirmatn-Medium.woff2") format("woff2");
 }
 
-/* ===== Fields ===== */
-.storyino-field {
-  margin: 18px 0;
+#storyino-admin,
+#storyino-admin button,
+#storyino-admin input,
+#storyino-admin select,
+#storyino-admin textarea,
+#storyino-admin table,
+#storyino-admin th,
+#storyino-admin td,
+#storyino-admin code,
+#storyino-admin label,
+#storyino-admin span,
+#storyino-admin p,
+#storyino-admin h1,
+#storyino-admin h2,
+#storyino-admin h3,
+#storyino-admin strong {
+  font-family: "Vazirmatn", Tahoma, "Segoe UI", ui-sans-serif, system-ui, sans-serif !important;
 }
 
-.storyino-field-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #334155;
-  font-size: 13px;
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme) prefix(stn);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(stn) source(none) important;
+
+@source "../../includes/admin.php";
+@source "../js/storyino-admin.js";
+
+@theme {
+  --font-sans: "Vazirmatn", Tahoma, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --color-story-gold: #feda75;
+  --color-story-orange: #fa7e1e;
+  --color-story-pink: #d62976;
+  --color-story-purple: #962fbf;
+  --color-story-blue: #4f5bd5;
 }
 
-.storyino-text-input {
-  width: 100%;
-  max-width: 320px;
-  height: 40px;
-  padding: 0 14px;
-  border-radius: 10px !important;
-  border: 1px solid #e2e8f0;
-  font-size: 14px;
-  background: #fff;
-  color: #0f172a;
-  transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+@layer base {
+  #storyino-admin {
+    font-family: "Vazirmatn", Tahoma, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    color: #1e1233;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(900px 280px at 100% 0%, rgba(214, 41, 118, 0.12), transparent 55%),
+      radial-gradient(700px 240px at 0% 8%, rgba(79, 91, 213, 0.12), transparent 50%),
+      radial-gradient(500px 200px at 80% 100%, rgba(250, 126, 30, 0.08), transparent 50%);
+    border-radius: 1.25rem;
+    padding: 0.75rem 0.5rem 1.5rem;
+  }
+
+  #storyino-admin *,
+  #storyino-admin *::before,
+  #storyino-admin *::after {
+    box-sizing: border-box;
+  }
+
+  #storyino-admin h1,
+  #storyino-admin h2,
+  #storyino-admin h3,
+  #storyino-admin p {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
+
+  #storyino-admin ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #storyino-admin img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  #storyino-admin button,
+  #storyino-admin input,
+  #storyino-admin code {
+    font: inherit;
+    color: inherit;
+  }
+
+  #storyino-admin button {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    text-shadow: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  #storyino-admin input[type="text"],
+  #storyino-admin input[type="url"] {
+    background: #fff;
+    border: 0;
+    box-shadow: none;
+    outline: none;
+    min-height: 0;
+    line-height: inherit;
+  }
 }
 
-.storyino-text-input:focus {
-  border-color: #d62976;
-  box-shadow: 0 0 0 3px rgba(214, 41, 118, 0.1);
-  outline: none;
-}
+@layer components {
+  #storyino-admin .stn-hero {
+    background:
+      linear-gradient(135deg, rgba(254, 218, 117, 0.35), rgba(214, 41, 118, 0.12) 42%, rgba(79, 91, 213, 0.16));
+    border: 1px solid rgba(214, 41, 118, 0.16);
+    box-shadow: 0 10px 30px rgba(150, 47, 191, 0.08);
+  }
 
-.storyino-field-hint {
-  color: #64748b;
-  font-size: 12px;
-  margin-top: 6px;
-}
+  #storyino-admin .stn-mark {
+    background: linear-gradient(135deg, #fa7e1e, #d62976 45%, #4f5bd5);
+    box-shadow: 0 6px 16px rgba(214, 41, 118, 0.35);
+  }
 
-/* ===== Switch ===== */
-.storyino-switch {
-  display: inline-flex;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  border-radius: 999px;
-  padding: 4px;
-  gap: 4px;
-}
+  #storyino-admin .stn-card {
+    border: 1px solid rgba(214, 41, 118, 0.12);
+    box-shadow:
+      0 1px 2px rgba(16, 24, 40, 0.04),
+      0 12px 28px rgba(150, 47, 191, 0.07);
+  }
 
-.storyino-switch-option {
-  position: relative;
-  cursor: pointer;
-  margin: 0;
-}
+  #storyino-admin .stn-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
 
-.storyino-switch-option input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
+  #storyino-admin .stn-heading::before {
+    content: "";
+    width: 0.22rem;
+    height: 1.05rem;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #feda75, #d62976, #4f5bd5);
+  }
 
-.storyino-switch-option span {
-  display: inline-flex;
-  align-items: center;
-  padding: 7px 18px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #64748b;
-  transition: all 0.15s ease;
-}
+  #storyino-admin .stn-btn-story {
+    background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+    background-size: 220% 220%;
+    background-position: 0% 50%;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(214, 41, 118, 0.28);
+    transition:
+      background-position 0.25s ease,
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
 
-.storyino-switch-option input:checked + span {
-  background: #0f172a;
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.25);
-}
+  #storyino-admin .stn-btn-story:hover {
+    background-position: 100% 50%;
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(214, 41, 118, 0.36);
+  }
 
-/* ===== Media List ===== */
-.storyino-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
-  margin: 0 0 18px;
-  padding: 0;
-  list-style: none;
-}
+  #storyino-admin .stn-btn-save {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(22, 163, 74, 0.28);
+  }
 
-.storyino-list:empty {
-  display: block;
-  border: 2px dashed #e2e8f0;
-  border-radius: 16px;
-  padding: 48px 20px;
-  text-align: center;
-}
+  #storyino-admin .stn-btn-save:hover {
+    filter: brightness(1.05);
+  }
 
-.storyino-list:empty::before {
-  content: "هنوز آیتمی انتخاب نشده ☝️";
-  color: #94a3b8;
-  font-size: 13px;
-}
+  #storyino-admin .stn-count {
+    background: linear-gradient(135deg, rgba(214, 41, 118, 0.12), rgba(79, 91, 213, 0.12));
+    color: #962fbf;
+    border: 1px solid rgba(214, 41, 118, 0.16);
+  }
 
-.storyino-item {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #eef0f3;
-  background: #f8fafc;
-  cursor: grab;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    border-color 0.15s ease;
-}
+  #storyino-admin .stn-chip {
+    background: #eef2ff;
+    color: #4f46e5;
+  }
 
-.storyino-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(13, 31, 60, 0.1);
-}
+  #storyino-admin .stn-code {
+    background: #0d1f3c !important;
+    color: #7dd3fc;
+  }
 
-.storyino-item.ui-sortable-helper {
-  transform: scale(1.04);
-  box-shadow: 0 14px 30px rgba(13, 31, 60, 0.28);
-}
+  #storyino-admin .stn-note {
+    background: linear-gradient(135deg, rgba(214, 41, 118, 0.08), rgba(79, 91, 213, 0.08));
+    border: 1px solid rgba(214, 41, 118, 0.16);
+    color: #475569;
+  }
 
-.storyino-item.has-link {
-  border-color: #10b981;
-}
+  #storyino-admin .stn-toggle-track {
+    background: #e4e4e7 !important;
+  }
 
-.storyino-item img {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  display: block;
-}
+  #storyino-admin .stn\:peer:checked + .stn-toggle-track {
+    background: linear-gradient(45deg, #fa7e1e, #d62976, #962fbf) !important;
+  }
 
-.storyino-type {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(4px);
-  color: #fff;
-  font-size: 10px;
-  padding: 3px 8px;
-  border-radius: 999px;
-  z-index: 2;
-}
+  #storyino-admin .storyino-list.is-empty {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    place-items: center;
+    min-height: 10rem;
+    border: 1px dashed rgba(214, 41, 118, 0.35);
+    border-radius: 0.75rem;
+    background: linear-gradient(180deg, rgba(254, 218, 117, 0.12), rgba(214, 41, 118, 0.05));
+  }
 
-.storyino-remove {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  width: 22px;
-  height: 22px;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.55);
-  color: #fff;
-  font-size: 13px;
-  line-height: 1;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  opacity: 0;
-  transition:
-    opacity 0.15s ease,
-    background 0.15s ease;
-  z-index: 2;
-}
+  #storyino-admin .storyino-list.is-empty::before {
+    content: "هنوز رسانه‌ای انتخاب نشده";
+    color: #c026d3;
+    font-size: 0.8125rem;
+  }
 
-.storyino-item:hover .storyino-remove {
-  opacity: 1;
-}
+  #storyino-admin .storyino-placeholder {
+    min-height: 8.5rem;
+    border: 1px dashed #d62976;
+    border-radius: 0.75rem;
+    background: rgba(214, 41, 118, 0.06);
+  }
 
-.storyino-remove:hover {
-  background: #dc2626;
-}
+  #storyino-admin .storyino-item {
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
 
-.storyino-link-input {
-  width: 100% !important;
-  padding: 5px 8px !important;
-  border: 0 !important;
-  border-radius: 6px !important;
-  font-size: 10px !important;
-  direction: ltr !important;
-  background: rgba(255, 255, 255, 0.95);
-  color: #0f172a !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
+  #storyino-admin .storyino-item:hover {
+    border-color: rgba(214, 41, 118, 0.45);
+    box-shadow: 0 10px 22px rgba(214, 41, 118, 0.12);
+    transform: translateY(-2px);
+  }
 
-.storyino-link-wrap {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  padding: 4px;
-  opacity: 0;
-  transition: opacity 0.15s ease;
-  pointer-events: none;
-}
+  #storyino-admin .storyino-item.ui-sortable-helper {
+    box-shadow: 0 14px 30px rgba(214, 41, 118, 0.22);
+  }
 
-.storyino-item:hover .storyino-link-wrap {
-  opacity: 1;
-  pointer-events: auto;
-}
+  #storyino-admin .storyino-item:has(.storyino-link-input:not(:placeholder-shown)) {
+    border-color: #10b981;
+  }
 
-.storyino-link-input::placeholder {
-  color: #94a3b8;
-}
+  #storyino-admin .storyino-copy:hover {
+    border-color: #d62976 !important;
+    color: #d62976 !important;
+  }
 
-.storyino-link-input:focus {
-  background: #fff;
-  box-shadow: inset 0 0 0 1px #6366f1;
-}
+  #storyino-admin .storyino-copied {
+    background: #059669 !important;
+    border-color: #059669 !important;
+    color: #fff !important;
+  }
 
-.storyino-link-input:not([value=""]),
-.storyino-link-input:not(:placeholder-shown) {
-  color: #059669;
-  font-weight: 600;
-}
+  #storyino-admin .stn-cover-wrap {
+    position: relative;
+    width: 4.5rem;
+    height: 4.5rem;
+    flex-shrink: 0;
+  }
 
-.storyino-item:has(.storyino-link-input:not([value=""])) {
-  border: 2px solid #10b981;
-}
+  #storyino-admin .stn-cover-btn {
+    display: block;
+    width: 4.5rem;
+    height: 4.5rem;
+    overflow: hidden;
+    border-radius: 50%;
+    padding: 2.5px;
+    background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+  }
 
-.storyino-placeholder {
-  aspect-ratio: 1;
-  border: 2px dashed #c7cbd4;
-  border-radius: 12px !important;
-  background: transparent;
-}
+  #storyino-admin .stn-cover-btn.is-warning {
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.45);
+  }
 
-/* ===== Shortcodes ===== */
-.storyino-shortcode-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 12px;
-}
+  #storyino-admin .storyino-clear-cover-fab {
+    position: absolute;
+    top: -0.2rem;
+    inset-inline-start: -0.2rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 50%;
+    background: #dc2626;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+  }
 
-.storyino-shortcode-item {
-  background: #f8fafc;
-  border: 1px solid #eef0f3;
-  border-radius: 12px !important;
-  padding: 14px 16px;
-  margin-bottom: 12px;
-  transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
-}
+  #storyino-admin .storyino-clear-cover-fab[hidden] {
+    display: none !important;
+  }
 
-.storyino-shortcode-item:hover {
-  border-color: #d62976;
-  box-shadow: 0 4px 14px rgba(214, 41, 118, 0.08);
-}
+  #storyino-admin .storyino-media-preview {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    height: auto;
+    object-fit: cover;
+    background: #18181b;
+  }
 
-.storyino-shortcode-item strong {
-  display: block;
-  margin-bottom: 4px;
-  font-size: 14px;
-  color: #0f172a;
-}
+  #storyino-admin .storyino-media-preview.is-icon {
+    object-fit: contain;
+    padding: 1.5rem;
+    background: #f4f4f5;
+  }
 
-.storyino-shortcode-item p {
-  margin: 0 0 10px;
-  font-size: 12px;
-  color: #64748b;
-}
+  #storyino-admin .storyino-play-mark {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.18);
+  }
 
-.storyino-shortcode-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+  #storyino-admin .storyino-play-mark::before {
+    content: "";
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.58);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
+  }
 
-.storyino-shortcode-row code {
-  flex: 1;
-  display: block;
-  direction: ltr;
-  text-align: left;
-  background: #0d1f3c !important;
-  color: #7dd3fc;
-  border: 0;
-  border-radius: 8px !important;
-  padding: 10px 12px;
-  font-size: 12px;
-  overflow-x: auto;
-  white-space: nowrap;
-}
+  #storyino-admin .storyino-play-mark::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0.38rem 0 0.38rem 0.62rem;
+    border-color: transparent transparent transparent #fff;
+    margin-inline-start: 0.12rem;
+  }
 
-.storyino-copy {
-  flex-shrink: 0;
-  background: #fff !important;
-  border: 1px solid #e2e8f0 !important;
-  border-radius: 999px !important;
-  color: #334155 !important;
-  font-weight: 600 !important;
-  text-shadow: none !important;
-  box-shadow: none !important;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
+  #storyino-admin .storyino-cover-preview,
+  #storyino-admin .storyino-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2.5px solid #fff;
+    box-sizing: border-box;
+  }
 
-.storyino-copy:hover {
-  border-color: #d62976 !important;
-  color: #d62976 !important;
-}
+  #storyino-admin .storyino-cover-preview {
+    object-fit: cover;
+    display: block;
+  }
 
-.storyino-copied,
-.storyino-copied:hover {
-  background: #059669 !important;
-  border-color: #059669 !important;
-  color: #fff !important;
-}
+  #storyino-admin .storyino-cover-placeholder {
+    display: grid;
+    place-items: center;
+    background: #fff;
+    color: #d62976;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
 
-/* ===== Table ===== */
-.storyino-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 12px !important;
-  overflow: hidden;
-  box-shadow: inset 0 0 0 1px #eef0f3;
-}
-
-.storyino-table th,
-.storyino-table td {
-  border: 0;
-  border-bottom: 1px solid #eef0f3;
-  padding: 10px 14px;
-  text-align: right;
-  font-size: 13px;
-}
-
-.storyino-table th {
-  background: #f8fafc;
-  color: #334155;
-  font-weight: 700;
-}
-
-.storyino-table tr:last-child td {
-  border-bottom: 0;
-}
-
-.storyino-table code {
-  direction: ltr;
-  display: inline-block;
-  background: #eef2ff;
-  color: #4338ca;
-  padding: 2px 8px;
-  border-radius: 6px !important;
-}
-
-/* ===== Note ===== */
-.storyino-note {
-  background: linear-gradient(
-    135deg,
-    rgba(214, 41, 118, 0.06),
-    rgba(79, 91, 213, 0.06)
-  );
-  border: 1px solid rgba(214, 41, 118, 0.15);
-  border-radius: 12px !important;
-  padding: 14px 16px;
-  margin-top: 14px;
-  font-size: 13px;
-  color: #475569;
-}
-
-.storyino-admin code {
-  border-radius: 6px !important;
-}
-
-.storyino-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  margin: 0;
-}
-
-.storyino-toggle input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.storyino-toggle-track {
-  width: 44px;
-  height: 24px;
-  border-radius: 999px;
-  background: #e2e8f0;
-  position: relative;
-  transition: background 0.2s ease;
-  flex-shrink: 0;
-}
-
-.storyino-toggle-track::after {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease;
-}
-
-.storyino-toggle input:checked + .storyino-toggle-track {
-  background: linear-gradient(45deg, #fa7e1e, #d62976, #962fbf);
-}
-
-.storyino-toggle input:checked + .storyino-toggle-track::after {
-  transform: translateX(20px);
-}
-
-.storyino-toggle-text {
-  font-size: 13px;
-  font-weight: 600;
-  color: #334155;
+  #storyino-admin .storyino-cat-placeholder {
+    min-height: 8rem;
+    border: 1px dashed #d62976;
+    border-radius: 0.75rem;
+    background: rgba(214, 41, 118, 0.06);
+  }
 }

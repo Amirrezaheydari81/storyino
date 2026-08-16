@@ -21,14 +21,37 @@
         signal?.addEventListener('abort', onAbort, { once: true });
     });
 
+    const i18n = window.storyinoI18n || {};
+
+    const isSafeUrl = (value, extraProtocols) => {
+        if (typeof value !== 'string' || value === '') {
+            return '';
+        }
+
+        try {
+            const parsed = new URL(value, window.location.href);
+            const allowed = extraProtocols || ['http:', 'https:'];
+
+            if (allowed.indexOf(parsed.protocol) === -1) {
+                return '';
+            }
+
+            return parsed.href;
+        } catch (e) {
+            return '';
+        }
+    };
+
     class StoryinoPlayer {
-        constructor(config) {
+        constructor(config, trigger) {
             if (window.storyinoActivePlayer) {
                 window.storyinoActivePlayer.close();
             }
 
+            this.trigger = trigger || null;
+
             this.stories = Array.isArray(config.stories)
-                ? config.stories.filter((item) => item && item.src)
+                ? config.stories.filter((item) => item && isSafeUrl(item.src))
                 : [];
 
             this.simulateSpeed = Number(config.simulateSpeed) || 0;
@@ -44,6 +67,7 @@
                     noStories: 'استوری پیدا نشد',
                     link: 'مشاهده',
                 },
+                i18n,
                 config.strings || {}
             );
 
@@ -56,6 +80,8 @@
             this.fills = [];
             this.consecutiveErrors = 0;
             this.closed = false;
+            this.prefetched = new Set();
+            this.prefetchNodes = [];
 
             this.build();
             this.bindEvents();
@@ -72,6 +98,13 @@
             this.overlay = document.createElement('div');
             this.overlay.className = 'storyino-overlay';
 
+            const ui = window.storyinoUi || {};
+            const useVazir = ui.useVazir === true || ui.useVazir === 1 || ui.useVazir === '1';
+
+            if (useVazir || (this.trigger && this.trigger.closest('.storyino-use-vazir'))) {
+                this.overlay.classList.add('storyino-use-vazir');
+            }
+
             this.overlay.innerHTML = `
         <div class="storyino-story">
           <div class="storyino-segments"></div>
@@ -84,7 +117,11 @@
             </div>
           </div>
 
-          <button type="button" class="storyino-close">×</button>
+          <button type="button" class="storyino-close">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
           <button type="button" class="storyino-nav storyino-prev" data-action="prev"></button>
           <button type="button" class="storyino-nav storyino-next" data-action="next"></button>
         </div>
@@ -187,6 +224,7 @@
 
             this.cancelTimer();
             this.cleanupMedia();
+            this.cleanupPrefetch();
 
             document.removeEventListener('keydown', this.onKeyDown);
 
@@ -232,11 +270,54 @@
             }
         }
 
+        cleanupPrefetch() {
+            this.prefetchNodes.forEach((el) => {
+                if (el.tagName === 'VIDEO') {
+                    el.pause();
+                    el.removeAttribute('src');
+                    el.load();
+                } else {
+                    el.src = '';
+                }
+            });
+
+            this.prefetchNodes = [];
+            this.prefetched.clear();
+        }
+
+        prefetchNext(index) {
+            if (!this.stories.length) return;
+
+            const next = this.stories[((index + 1) % this.stories.length + this.stories.length) % this.stories.length];
+            const src = isSafeUrl(next?.src);
+
+            if (!src || this.prefetched.has(src)) return;
+
+            this.prefetched.add(src);
+
+            if (next.type === 'video') {
+                const video = document.createElement('video');
+                video.muted = true;
+                video.playsInline = true;
+                video.preload = 'auto';
+                video.src = src;
+                this.prefetchNodes.push(video);
+                return;
+            }
+
+            const img = new Image();
+            img.decoding = 'async';
+            img.src = src;
+            this.prefetchNodes.push(img);
+        }
+
         renderLinkButton(link) {
-            if (!link) return;
+            const href = isSafeUrl(link);
+
+            if (!href) return;
 
             const a = document.createElement('a');
-            a.href = link;
+            a.href = href;
             a.target = '_blank';
             a.rel = 'noopener noreferrer';
             a.className = 'storyino-link-btn';
@@ -272,7 +353,8 @@
 
         async downloadFully(url, signal, onProgress) {
             const res = await fetch(url, {
-                cache: 'no-store',
+                cache: 'force-cache',
+                credentials: 'same-origin',
                 signal,
             });
 
@@ -283,7 +365,7 @@
             const total = Number(res.headers.get('content-length')) || 0;
             const mime = res.headers.get('content-type') || '';
 
-            if (!res.body) {
+            if (this.simulateSpeed <= 0 || !res.body) {
                 const blob = await res.blob();
                 onProgress?.(1, blob.size, blob.size);
                 return blob;
@@ -306,10 +388,8 @@
 
                     onProgress?.(total ? received / total : null, received, total);
 
-                    if (this.simulateSpeed > 0) {
-                        const ms = (part.length / (this.simulateSpeed * 1024)) * 1000;
-                        await sleep(ms, signal);
-                    }
+                    const ms = (part.length / (this.simulateSpeed * 1024)) * 1000;
+                    await sleep(ms, signal);
                 }
             }
 
@@ -321,6 +401,8 @@
             img.alt = '';
             img.decoding = 'async';
             img.draggable = false;
+            img.loading = 'eager';
+            img.fetchPriority = 'high';
 
             const loaded = new Promise((resolve, reject) => {
                 img.onload = resolve;
@@ -353,13 +435,19 @@
             video.preload = 'auto';
             video.setAttribute('muted', '');
             video.setAttribute('playsinline', '');
+            video.setAttribute('fetchpriority', 'high');
 
             const ready = new Promise((resolve, reject) => {
-                video.onloadeddata = resolve;
-                video.onerror = () => reject(new Error('video load failed'));
+                const ok = () => resolve();
+                video.addEventListener('canplay', ok, { once: true });
+                video.addEventListener('error', () => reject(new Error('video load failed')), { once: true });
+                video.src = url;
+
+                if (video.readyState >= 3) {
+                    ok();
+                }
             });
 
-            video.src = url;
             await ready;
 
             if (session !== this.session || this.closed) return;
@@ -419,6 +507,30 @@
             this.raf = requestAnimationFrame(tick);
         }
 
+        async playItem(url, item, session) {
+            if (item.type === 'video') {
+                await this.renderVideo(url, session);
+
+                if (session !== this.session || this.closed) return;
+
+                this.setLoading(false);
+                this.consecutiveErrors = 0;
+                this.renderLinkButton(item.link);
+                this.startVideoTimer();
+            } else {
+                await this.renderImage(url, session);
+
+                if (session !== this.session || this.closed) return;
+
+                this.setLoading(false);
+                this.consecutiveErrors = 0;
+                this.renderLinkButton(item.link);
+                this.startImageTimer(item.duration || this.imageDuration);
+            }
+
+            this.prefetchNext(this.current);
+        }
+
         async show(index) {
             if (this.closed) return;
 
@@ -442,40 +554,26 @@
             this.current = ((index % this.stories.length) + this.stories.length) % this.stories.length;
 
             this.renderSegments(0);
-            this.setLoading(true, 0);
+            this.setLoading(true, this.simulateSpeed > 0 ? 0 : null);
 
             const item = this.stories[this.current];
 
             try {
-                const blob = await this.downloadFully(item.src, this.aborter.signal, (ratio) => {
-                    if (session === this.session && !this.closed) {
-                        this.setLoading(true, ratio);
-                    }
-                });
-
-                if (session !== this.session || this.closed) return;
-
-                this.objectUrl = URL.createObjectURL(blob);
-
-                if (item.type === 'video') {
-                    await this.renderVideo(this.objectUrl, session);
+                if (this.simulateSpeed > 0) {
+                    const blob = await this.downloadFully(item.src, this.aborter.signal, (ratio) => {
+                        if (session === this.session && !this.closed) {
+                            this.setLoading(true, ratio);
+                        }
+                    });
 
                     if (session !== this.session || this.closed) return;
 
-                    this.setLoading(false);
-                    this.consecutiveErrors = 0;
-                    this.renderLinkButton(item.link);
-                    this.startVideoTimer();
-                } else {
-                    await this.renderImage(this.objectUrl, session);
-
-                    if (session !== this.session || this.closed) return;
-
-                    this.setLoading(false);
-                    this.consecutiveErrors = 0;
-                    this.renderLinkButton(item.link);
-                    this.startImageTimer(item.duration || this.imageDuration);
+                    this.objectUrl = URL.createObjectURL(blob);
+                    await this.playItem(this.objectUrl, item, session);
+                    return;
                 }
+
+                await this.playItem(item.src, item, session);
             } catch (error) {
                 if (error?.name === 'AbortError' || session !== this.session || this.closed) {
                     return;
@@ -500,26 +598,35 @@
         }
 
         next() {
+            if (this.current >= this.stories.length - 1) {
+                this.close();
+                return;
+            }
+
             this.show(this.current + 1);
         }
 
         prev() {
+            if (this.current <= 0) {
+                return;
+            }
+
             this.show(this.current - 1);
         }
     }
 
     document.addEventListener('click', (e) => {
-        const button = e.target.closest('.storyino-button');
-        if (!button) return;
+        const trigger = e.target.closest('.storyino-button, .storyino-ring');
+        if (!trigger) return;
 
         let config = {};
 
         try {
-            config = JSON.parse(button.getAttribute('data-storyino') || '{}');
+            config = JSON.parse(trigger.getAttribute('data-storyino') || '{}');
         } catch {
             config = {};
         }
 
-        new StoryinoPlayer(config);
+        new StoryinoPlayer(config, trigger);
     });
 })();

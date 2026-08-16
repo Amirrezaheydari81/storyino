@@ -1,97 +1,181 @@
 <?php
 defined('ABSPATH') || exit;
 
+function storyino_enqueue_frontend()
+{
+    wp_enqueue_style('storyino');
+    wp_enqueue_script('storyino');
+
+    static $font_css = false;
+
+    if ($font_css) {
+        return;
+    }
+
+    $font_css = true;
+    $font_url = STORYINO_URL . 'assets/fonts/Vazirmatn-Medium.woff2';
+    $src      = 'url("' . esc_url($font_url) . '") format("woff2")';
+
+    wp_add_inline_style(
+        'storyino',
+        '@font-face{font-family:"Vazirmatn";font-style:normal;font-weight:400;font-display:swap;src:' . $src . '}'
+        . '@font-face{font-family:"Vazirmatn";font-style:normal;font-weight:500;font-display:swap;src:' . $src . '}'
+        . '@font-face{font-family:"Vazirmatn";font-style:normal;font-weight:600;font-display:swap;src:' . $src . '}'
+    );
+}
+
 function storyino_render_shortcode($atts)
 {
     $atts = shortcode_atts(
         [
-            'label'    => __('استوری', 'storyino'),
+            'label'    => '',
             'ids'      => '',
-            'speed'    => 250,
+            'cat'      => '',
+            'speed'    => 0,
             'duration' => 5000,
         ],
         $atts,
         'storyino'
     );
 
-    $stories = [];
+    storyino_enqueue_frontend();
 
-    // 1) اگر داخل شورت‌کد ids داده شده بود
     if (! empty($atts['ids'])) {
         $ids     = storyino_get_ids_from_raw($atts['ids']);
         $stories = storyino_get_stories_from_ids($ids);
+        $config  = storyino_player_config($stories, $atts);
+
+        if (! $config) {
+            return '';
+        }
+
+        $label = $atts['label'] !== '' ? $atts['label'] : __('استوری', 'storyino');
+        $cover = '';
+
+        if (! empty($ids[0])) {
+            $cover = (string) wp_get_attachment_image_url((int) $ids[0], 'thumbnail');
+        }
+
+        return storyino_render_tray([
+            storyino_render_ring($config, $label, $cover),
+        ]);
     }
 
-    // 2) لیست انتخاب‌شده از تنظیمات Storyino
-    if (empty($stories)) {
-        $stories = storyino_get_option_stories();
+    if (! empty($atts['cat'])) {
+        $category = storyino_get_category_by_slug($atts['cat']);
+
+        if (! $category) {
+            return '';
+        }
+
+        return storyino_render_category_ring($category, $atts);
     }
 
-    // 3) فیلتر و فایل‌های پیش‌فرض
-    if (empty($stories)) {
-        $stories = apply_filters('storyino_default_stories', storyino_get_default_stories(), $atts);
+    $rings = [];
+
+    foreach (storyino_get_categories() as $category) {
+        $ring = storyino_render_category_ring($category, $atts);
+
+        if ($ring !== '') {
+            $rings[] = $ring;
+        }
     }
 
-    $stories = storyino_normalize_stories($stories);
+    if (! empty($rings)) {
+        return storyino_render_tray($rings);
+    }
 
-    // اگر هیچ عکس یا ویدیویی انتخاب نشده بود، هیچ چیزی رندر نکن
-    if (empty($stories)) {
+    $stories = apply_filters('storyino_default_stories', storyino_get_default_stories(), $atts);
+    $config  = storyino_player_config($stories, $atts);
+
+    if (! $config) {
         return '';
     }
 
-    $options = [
-        'stories'               => $stories,
-        'simulateSpeed'         => max(0, absint($atts['speed'])),
-        'imageDuration'         => max(1000, absint($atts['duration'])),
-        'fallbackVideoDuration' => 10000,
-        'strings'               => [
-            'close'     => __('بستن', 'storyino'),
-            'previous'  => __('قبلی', 'storyino'),
-            'next'      => __('بعدی', 'storyino'),
-            'error'     => __('خطا در بارگذاری', 'storyino'),
-            'noStories' => __('استوری پیدا نشد', 'storyino'),
-            'link'      => storyino_get_link_label(),
-        ],
-    ];
+    $label = $atts['label'] !== '' ? $atts['label'] : __('استوری', 'storyino');
+    $cover = ! empty($stories[0]['src']) ? $stories[0]['src'] : '';
 
-    wp_enqueue_style('storyino');
-    wp_enqueue_script('storyino');
+    return storyino_render_tray([
+        storyino_render_ring($config, $label, $cover),
+    ]);
+}
 
-    static $instance = 0;
-    $instance++;
+function storyino_render_category_ring($category, $atts)
+{
+    $stories = storyino_get_stories_from_ids($category['ids']);
+    $config  = storyino_player_config($stories, $atts);
 
-    $button_id    = 'storyino-btn-' . $instance;
-    $button_style = storyino_get_button_style();
-    $json         = esc_attr(wp_json_encode($options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-
-    // حالت آیکونی
-    // حالت آیکونی
-    $animation_class = storyino_get_icon_animation() ? ' storyino-animated' : '';
-    $spin_style      = storyino_get_icon_animation() ? ' style="animation:storyino-icon-spin 5s linear infinite !important"' : '';
-
-    // keyframes رو مستقیم توی صفحه تزریق می‌کنیم تا به فایل CSS وابسته نباشه
-    if (storyino_get_icon_animation()) {
-        wp_add_inline_style('storyino', '@keyframes storyino-icon-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}');
+    if (! $config) {
+        return '';
     }
 
-    if ('icon' === $button_style) {
-        return sprintf(
-            '<button type="button" id="%s" class="storyino-button storyino-button-icon%s" data-storyino="%s" aria-label="%s" title="%s"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"%s><path d="M16.42 7.95C18.86 10.39 18.86 14.35 16.42 16.79C13.98 19.23 10.02 19.23 7.58 16.79C5.14 14.35 5.14 10.39 7.58 7.95C10.02 5.51 13.98 5.51 16.42 7.95Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.25 21.64C6.25 20.84 4.5 19.39 3.34 17.38C2.2 15.41 1.82 13.22 2.09 11.13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.85 4.48C7.55 3.15 9.68 2.36 12 2.36C14.27 2.36 16.36 3.13 18.04 4.41" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.75 21.64C17.75 20.84 19.5 19.39 20.66 17.38C21.8 15.41 22.18 13.22 21.91 11.13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>',
-            esc_attr($button_id),
-            $animation_class,
-            $json,
-            esc_attr($atts['label']),
-            esc_attr($atts['label']),
-            $spin_style
+    $label = $atts['label'] !== '' ? $atts['label'] : $category['title'];
+    $cover = storyino_get_category_cover_url($category);
+
+    return storyino_render_ring($config, $label, $cover);
+}
+
+function storyino_render_tray($rings)
+{
+    $rings = array_filter($rings);
+
+    if (empty($rings)) {
+        return '';
+    }
+
+    return '<div class="storyino-tray' . (storyino_get_vazir_ui() ? ' storyino-use-vazir' : '') . '" dir="rtl">' . implode('', $rings) . '</div>';
+}
+
+function storyino_render_ring($config, $label, $cover_url)
+{
+    $json = wp_json_encode(
+        $config,
+        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+    );
+    $json = esc_attr((string) $json);
+    $label = (string) $label;
+
+    if ($cover_url) {
+        $avatar = sprintf(
+            '<img src="%s" alt="" loading="lazy" decoding="async">',
+            esc_url($cover_url)
         );
+    } else {
+        $avatar = '<span class="storyino-ring-fallback" aria-hidden="true"></span>';
     }
 
-    // حالت متنی
     return sprintf(
-        '<button type="button" id="%s" class="storyino-button" data-storyino="%s">%s</button>',
-        esc_attr($button_id),
+        '<button type="button" class="storyino-ring" data-storyino="%s" aria-label="%s"><span class="storyino-ring-avatar">%s</span><span class="storyino-ring-label">%s</span></button>',
         $json,
-        esc_html($atts['label'])
+        esc_attr($label),
+        $avatar,
+        esc_html($label)
     );
 }
+
+function storyino_register_category_shortcodes()
+{
+    foreach (storyino_get_categories() as $category) {
+        $slug = isset($category['slug']) ? $category['slug'] : '';
+
+        if ($slug === '' || ! preg_match('/^[a-z0-9\-]+$/', $slug)) {
+            continue;
+        }
+
+        $tag = 'storyino-' . $slug;
+
+        if (shortcode_exists($tag)) {
+            continue;
+        }
+
+        add_shortcode($tag, function ($atts) use ($slug) {
+            $atts = is_array($atts) ? $atts : [];
+            $atts['cat'] = $slug;
+
+            return storyino_render_shortcode($atts);
+        });
+    }
+}
+
 add_shortcode('storyino', 'storyino_render_shortcode');
+add_action('init', 'storyino_register_category_shortcodes');

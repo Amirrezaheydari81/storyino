@@ -1,3 +1,36 @@
+# dependencies
 node_modules/
+package-lock.json.bak
+
+# tooling output
+graphify-out/
+.cache/
+*.tsbuildinfo
+
+# logs
 *.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# packaging
+*.zip
+dist/
+build/
+
+# editors
+.idea/
+.vscode/
+*.code-workspace
+*.swp
+*~
+
+# os
 .DS_Store
+Thumbs.db
+Desktop.ini
+
+# local env
+.env
+.env.*
+!.env.example
