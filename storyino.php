@@ -6,6 +6,7 @@
  * Description: پلاگین استوری وردپرس با شورت‌کد [storyino] و انتخاب تصویر/ویدیو از کتابخانه رسانه
  * Version: 1.1.6
  * Author: AmirrezaHeydari
+ * Author URI: https://github.com/Amirrezaheydari81
  * License: GPL-2.0-or-later
  * Text Domain: storyino
  * Domain Path: /languages
