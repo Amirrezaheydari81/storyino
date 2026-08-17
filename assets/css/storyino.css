@@ -401,12 +401,26 @@ button.storyino-button.storyino-animated svg,
 
 /* ===== Instagram-style story tray ===== */
 .storyino-wrap {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) !important;
+  display: block !important;
   width: 100% !important;
   max-width: 100% !important;
   min-width: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
   box-sizing: border-box !important;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
+}
+
+.storyino-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+.storyino-wrap::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 999px;
 }
 
 .storyino-tray {
@@ -416,33 +430,19 @@ button.storyino-button.storyino-animated svg,
   --storyino-label: 12px;
   --storyino-pad: 3px;
   --storyino-border: 2.5px;
-  display: flex !important;
+  display: inline-flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
   gap: var(--storyino-gap) !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  width: 100% !important;
-  max-width: 100% !important;
+  width: max-content !important;
+  max-width: none !important;
   min-width: 0 !important;
+  overflow: visible !important;
   padding: 6px 2px 10px !important;
   margin: 0 !important;
   box-sizing: border-box !important;
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  touch-action: pan-x;
-}
-
-.storyino-tray::-webkit-scrollbar {
-  height: 6px;
-}
-
-.storyino-tray::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.22);
-  border-radius: 999px;
 }
 
 .storyino-tray.storyino-size-small {
