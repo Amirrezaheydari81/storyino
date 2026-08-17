@@ -4,7 +4,7 @@ Tags: stories, instagram, shortcode, video, gallery
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,8 @@ The plugin UI is Persian (RTL). CSS, JavaScript, and the Vazirmatn font are load
 * Player closes after the last story
 * Prefetch of the next story
 * Optional local Vazirmatn font for circle labels and the link button
+* Small, medium, or large ring size, with horizontal scroll when the row overflows
+* Flat story rings without a drop shadow
 * No CDN dependency for styles, scripts, or fonts
 
 = Shortcodes =
@@ -101,6 +103,11 @@ Confirm the plugin is active, the shortcode is in the content, the category has 
 
 == Changelog ==
 
+= 1.1.9 =
+* Added small, medium, and large sizes for story rings.
+* Story row scrolls horizontally when rings overflow the page width.
+* Removed the drop shadow behind story rings for a flat look.
+
 = 1.1.8 =
 * Added a setting to show or hide the story category title under each ring.
 * Added a setting to set the story title color to black or white.
@@ -124,6 +131,9 @@ Confirm the plugin is active, the shortcode is in the content, the category has 
 * First release.
 
 == Upgrade Notice ==
+
+= 1.1.9 =
+Adds story ring size options, horizontal scrolling when the row overflows, and flat rings without a drop shadow.
 
 = 1.1.8 =
 Adds options to hide story titles and choose black or white title color.

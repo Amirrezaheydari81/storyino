@@ -12,3 +12,4 @@ delete_option('storyino_icon_animation');
 delete_option('storyino_vazir_ui');
 delete_option('storyino_show_title');
 delete_option('storyino_title_color');
+delete_option('storyino_ring_size');

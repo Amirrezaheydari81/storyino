@@ -457,6 +457,20 @@ function storyino_save_title_color($color)
     update_option('storyino_title_color', $color, false);
 }
 
+function storyino_get_ring_size()
+{
+    $size = get_option('storyino_ring_size', 'medium');
+
+    return in_array($size, ['small', 'medium', 'large'], true) ? $size : 'medium';
+}
+
+function storyino_save_ring_size($size)
+{
+    $size = in_array($size, ['small', 'medium', 'large'], true) ? $size : 'medium';
+
+    update_option('storyino_ring_size', $size, false);
+}
+
 function storyino_sanitize_slug($slug)
 {
     $slug = sanitize_title((string) $slug);

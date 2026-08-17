@@ -137,6 +137,10 @@ function storyino_render_settings_page()
                 storyino_save_title_color(sanitize_key($_POST['storyino_title_color']));
             }
 
+            if (isset($_POST['storyino_ring_size'])) {
+                storyino_save_ring_size(sanitize_key($_POST['storyino_ring_size']));
+            }
+
             $saved = true;
         }
     }
@@ -148,6 +152,7 @@ function storyino_render_settings_page()
     $vazir_ui       = storyino_get_vazir_ui();
     $show_title     = storyino_get_show_title();
     $title_color    = storyino_get_title_color();
+    $ring_size      = storyino_get_ring_size();
 
     if (empty($categories)) {
         $categories = [
@@ -293,6 +298,33 @@ function storyino_render_settings_page()
                                             </span>
                                         </label>
                                     </div>
+                                </div>
+
+                                <div>
+                                    <span class="stn:mb-1.5 stn:block stn:text-sm stn:font-medium stn:text-zinc-800">
+                                        <?php esc_html_e('اندازه دایره استوری', 'storyino'); ?>
+                                    </span>
+                                    <div class="stn:inline-flex stn:rounded-full stn:border stn:border-fuchsia-100 stn:bg-fuchsia-50/70 stn:p-1">
+                                        <label class="stn:m-0 stn:cursor-pointer">
+                                            <input type="radio" name="storyino_ring_size" value="small" class="stn:peer stn:sr-only" <?php checked($ring_size, 'small'); ?>>
+                                            <span class="stn:block stn:rounded-full stn:px-3.5 stn:py-1.5 stn:text-sm stn:font-medium stn:text-fuchsia-700/60 stn:transition-colors stn:peer-checked:bg-white stn:peer-checked:text-fuchsia-700 stn:peer-checked:shadow-sm">
+                                                <?php esc_html_e('کوچک', 'storyino'); ?>
+                                            </span>
+                                        </label>
+                                        <label class="stn:m-0 stn:cursor-pointer">
+                                            <input type="radio" name="storyino_ring_size" value="medium" class="stn:peer stn:sr-only" <?php checked($ring_size, 'medium'); ?>>
+                                            <span class="stn:block stn:rounded-full stn:px-3.5 stn:py-1.5 stn:text-sm stn:font-medium stn:text-fuchsia-700/60 stn:transition-colors stn:peer-checked:bg-white stn:peer-checked:text-fuchsia-700 stn:peer-checked:shadow-sm">
+                                                <?php esc_html_e('متوسط', 'storyino'); ?>
+                                            </span>
+                                        </label>
+                                        <label class="stn:m-0 stn:cursor-pointer">
+                                            <input type="radio" name="storyino_ring_size" value="large" class="stn:peer stn:sr-only" <?php checked($ring_size, 'large'); ?>>
+                                            <span class="stn:block stn:rounded-full stn:px-3.5 stn:py-1.5 stn:text-sm stn:font-medium stn:text-fuchsia-700/60 stn:transition-colors stn:peer-checked:bg-white stn:peer-checked:text-fuchsia-700 stn:peer-checked:shadow-sm">
+                                                <?php esc_html_e('بزرگ', 'storyino'); ?>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <p class="stn:mt-1.5 stn:text-xs stn:text-zinc-500"><?php esc_html_e('اگر دایره‌ها از عرض صفحه بیشتر شوند، ردیف به‌صورت افقی اسکرول می‌شود.', 'storyino'); ?></p>
                                 </div>
                             </div>
 
