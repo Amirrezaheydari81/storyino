@@ -136,7 +136,7 @@ function storyino_render_tray($rings)
     $classes[] = 'storyino-title-' . storyino_get_title_color();
     $classes[] = 'storyino-size-' . storyino_get_ring_size();
 
-    return '<div class="' . esc_attr(implode(' ', $classes)) . '" dir="rtl">' . implode('', $rings) . '</div>';
+    return '<div class="storyino-wrap"><div class="' . esc_attr(implode(' ', $classes)) . '" dir="rtl">' . implode('', $rings) . '</div></div>';
 }
 
 function storyino_render_ring($config, $label, $cover_url)

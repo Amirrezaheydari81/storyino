@@ -400,6 +400,15 @@ button.storyino-button.storyino-animated svg,
 }
 
 /* ===== Instagram-style story tray ===== */
+.storyino-wrap {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
 .storyino-tray {
   --storyino-ring: 78px;
   --storyino-avatar: 68px;
@@ -411,6 +420,7 @@ button.storyino-button.storyino-animated svg,
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: flex-start !important;
+  justify-content: flex-start !important;
   gap: var(--storyino-gap) !important;
   overflow-x: auto !important;
   overflow-y: hidden !important;
@@ -424,6 +434,15 @@ button.storyino-button.storyino-animated svg,
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   touch-action: pan-x;
+}
+
+.storyino-tray::-webkit-scrollbar {
+  height: 6px;
+}
+
+.storyino-tray::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 999px;
 }
 
 .storyino-tray.storyino-size-small {
@@ -449,7 +468,9 @@ button.storyino-ring,
   all: unset !important;
   box-sizing: border-box !important;
   display: flex !important;
-  flex: 0 0 auto !important;
+  flex: 0 0 var(--storyino-ring) !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
   flex-direction: column !important;
   align-items: center !important;
   gap: 6px !important;
