@@ -136,7 +136,18 @@ function storyino_render_tray($rings)
     $classes[] = 'storyino-title-' . storyino_get_title_color();
     $classes[] = 'storyino-size-' . storyino_get_ring_size();
 
-    return '<div class="storyino-wrap"><div class="' . esc_attr(implode(' ', $classes)) . '" dir="rtl">' . implode('', $rings) . '</div></div>';
+    $prev_icon = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M9.3 5.3a1 1 0 0 1 1.4 0l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 1 1-1.4-1.4L14.58 12 9.3 6.7a1 1 0 0 1 0-1.4z"/></svg>';
+    $next_icon = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M14.7 5.3a1 1 0 0 1 0 1.4L9.42 12l5.28 5.3a1 1 0 1 1-1.4 1.4l-6-6a1 1 0 0 1 0-1.4l6-6a1 1 0 0 1 1.4 0z"/></svg>';
+
+    return sprintf(
+        '<div class="storyino-wrap" dir="rtl"><button type="button" class="storyino-tray-nav storyino-tray-prev" aria-label="%s">%s</button><div class="storyino-scroller"><div class="%s">%s</div></div><button type="button" class="storyino-tray-nav storyino-tray-next" aria-label="%s">%s</button></div>',
+        esc_attr__('قبلی', 'storyino'),
+        $prev_icon,
+        esc_attr(implode(' ', $classes)),
+        implode('', $rings),
+        esc_attr__('بعدی', 'storyino'),
+        $next_icon
+    );
 }
 
 function storyino_render_ring($config, $label, $cover_url)

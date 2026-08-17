@@ -615,9 +615,106 @@
         }
     }
 
+    const capTrayWidth = (wrap) => {
+        let cap = document.documentElement.clientWidth || window.innerWidth;
+        let node = wrap.parentElement;
+
+        while (node && node !== document.body) {
+            const width = node.clientWidth;
+
+            if (width > 80 && width < cap) {
+                cap = width;
+            }
+
+            node = node.parentElement;
+        }
+
+        wrap.style.setProperty('max-width', cap + 'px', 'important');
+        wrap.style.setProperty('width', '100%', 'important');
+    };
+
+    const trayOffset = (wrap, value) => {
+        if (value === undefined) {
+            return Number(wrap.getAttribute('data-offset') || 0);
+        }
+
+        wrap.setAttribute('data-offset', String(value));
+        return value;
+    };
+
+    const refreshTray = (wrap) => {
+        const scroller = wrap.querySelector('.storyino-scroller');
+        const tray = wrap.querySelector('.storyino-tray');
+        const prev = wrap.querySelector('.storyino-tray-prev');
+        const next = wrap.querySelector('.storyino-tray-next');
+
+        if (!scroller || !tray || !prev || !next) {
+            return 0;
+        }
+
+        capTrayWidth(wrap);
+        scroller.style.setProperty('max-width', '100%', 'important');
+
+        const max = Math.max(0, tray.scrollWidth - scroller.clientWidth);
+        const rtl = (wrap.getAttribute('dir') || getComputedStyle(wrap).direction) === 'rtl';
+        const offset = Math.max(0, Math.min(max, trayOffset(wrap)));
+
+        trayOffset(wrap, offset);
+        tray.style.transform = rtl
+            ? 'translate3d(' + offset + 'px,0,0)'
+            : 'translate3d(' + (-offset) + 'px,0,0)';
+
+        wrap.classList.toggle('has-overflow', max > 4);
+        prev.classList.toggle('is-disabled', offset <= 1);
+        next.classList.toggle('is-disabled', offset >= max - 1);
+        prev.setAttribute('aria-disabled', offset <= 1 ? 'true' : 'false');
+        next.setAttribute('aria-disabled', offset >= max - 1 ? 'true' : 'false');
+        prev.disabled = false;
+        next.disabled = false;
+
+        return max;
+    };
+
+    const moveTray = (wrap, direction) => {
+        const scroller = wrap.querySelector('.storyino-scroller');
+        const tray = wrap.querySelector('.storyino-tray');
+
+        if (!scroller || !tray) {
+            return;
+        }
+
+        refreshTray(wrap);
+        const step = Math.max(Math.round(scroller.clientWidth * 0.8), 120);
+
+        trayOffset(wrap, trayOffset(wrap) + (direction * step));
+        refreshTray(wrap);
+    };
+
     document.addEventListener('click', (e) => {
+        const nav = e.target.closest('.storyino-tray-nav');
+
+        if (nav) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (e.stopImmediatePropagation) {
+                e.stopImmediatePropagation();
+            }
+
+            const wrap = nav.closest('.storyino-wrap');
+
+            if (wrap) {
+                moveTray(wrap, nav.classList.contains('storyino-tray-next') ? 1 : -1);
+            }
+
+            return;
+        }
+
         const trigger = e.target.closest('.storyino-button, .storyino-ring');
-        if (!trigger) return;
+
+        if (!trigger) {
+            return;
+        }
 
         let config = {};
 
@@ -628,5 +725,19 @@
         }
 
         new StoryinoPlayer(config, trigger);
-    });
+    }, true);
+
+    const initTrays = () => {
+        document.querySelectorAll('.storyino-wrap').forEach((wrap) => {
+            refreshTray(wrap);
+        });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTrays);
+    } else {
+        initTrays();
+    }
+
+    window.addEventListener('resize', initTrays);
 })();

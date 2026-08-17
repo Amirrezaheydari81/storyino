@@ -401,26 +401,69 @@ button.storyino-button.storyino-animated svg,
 
 /* ===== Instagram-style story tray ===== */
 .storyino-wrap {
+  position: relative !important;
+  z-index: 50 !important;
+  isolation: isolate !important;
   display: block !important;
   width: 100% !important;
   max-width: 100% !important;
   min-width: 0 !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
+  overflow: hidden !important;
   box-sizing: border-box !important;
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  touch-action: pan-x;
 }
 
-.storyino-wrap::-webkit-scrollbar {
-  height: 6px;
+.storyino-scroller {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
-.storyino-wrap::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.22);
-  border-radius: 999px;
+.storyino-tray-nav {
+  position: absolute !important;
+  top: 28px !important;
+  z-index: 9999 !important;
+  box-sizing: border-box !important;
+  display: none !important;
+  width: 36px !important;
+  height: 36px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid rgba(17, 17, 17, 0.12) !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  color: #111 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+  cursor: pointer !important;
+  place-items: center !important;
+  line-height: 0 !important;
+  pointer-events: auto !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.storyino-tray-prev {
+  inset-inline-start: 4px !important;
+}
+
+.storyino-tray-next {
+  inset-inline-end: 4px !important;
+}
+
+.storyino-wrap.has-overflow .storyino-tray-nav {
+  display: grid !important;
+}
+
+.storyino-tray-nav:disabled,
+.storyino-tray-nav.is-disabled {
+  opacity: 0.35 !important;
+  cursor: default !important;
+}
+
+.storyino-tray-nav svg {
+  display: block !important;
+  pointer-events: none !important;
 }
 
 .storyino-tray {
@@ -443,6 +486,8 @@ button.storyino-button.storyino-animated svg,
   padding: 6px 2px 10px !important;
   margin: 0 !important;
   box-sizing: border-box !important;
+  transition: transform 0.35s ease !important;
+  will-change: transform;
 }
 
 .storyino-tray.storyino-size-small {

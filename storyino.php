@@ -4,7 +4,7 @@
  * Plugin Name: Storyino
  * Plugin URI: https://github.com/Amirrezaheydari81/storyino
  * Description: پلاگین استوری وردپرس با شورت‌کد [storyino] و انتخاب تصویر/ویدیو از کتابخانه رسانه
- * Version: 1.1.9
+ * Version: 1.1.12
  * Requires at least: 6.3
  * Requires PHP: 7.4
  * Author: AmirrezaHeydari
@@ -17,7 +17,7 @@
 
 defined('ABSPATH') || exit;
 
-define('STORYINO_VERSION', '1.1.9');
+define('STORYINO_VERSION', '1.1.12');
 define('STORYINO_PATH', plugin_dir_path(__FILE__));
 define('STORYINO_URL', plugin_dir_url(__FILE__));
 define('STORYINO_OPTION_IDS', 'storyino_story_ids');
