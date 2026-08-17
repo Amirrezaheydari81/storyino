@@ -19,6 +19,8 @@ const JS_FILES = [
     { src: 'js/storyino-admin.js', out: 'js/storyino-admin.min.js' },
 ];
 
+const SOURCE_BANNER = '/* Storyino source: src/ and https://github.com/Amirrezaheydari81/storyino */\n';
+
 function isolateAdminCss(css) {
     return css.replace(
         '*,:before,:after,::backdrop{',
@@ -33,6 +35,24 @@ function ensureDir(filePath) {
     }
 }
 
+function copyReadableAssets() {
+    for (const file of JS_FILES) {
+        const from = path.join(SRC, file.src);
+        const to = path.join(OUT, file.src);
+
+        ensureDir(to);
+        fs.copyFileSync(from, to);
+        console.log(`[js] copy ${file.src}`);
+    }
+
+    const cssFrom = path.join(SRC, FRONTEND_CSS.src);
+    const cssTo = path.join(OUT, 'css/storyino.css');
+
+    ensureDir(cssTo);
+    fs.copyFileSync(cssFrom, cssTo);
+    console.log('[css] copy css/storyino.css');
+}
+
 async function buildJS() {
     console.log('[js] building...');
     await esbuild.build({
@@ -43,6 +63,7 @@ async function buildJS() {
         target: ['es2020'],
         outbase: SRC,
         entryNames: '[dir]/[name].min',
+        banner: { js: SOURCE_BANNER },
         logLevel: 'info',
     });
 }
@@ -114,6 +135,7 @@ async function buildAdminCSS() {
 
 async function buildAll() {
     const start = Date.now();
+    copyReadableAssets();
     await buildJS();
     await buildFrontendCSS();
     await buildAdminCSS();

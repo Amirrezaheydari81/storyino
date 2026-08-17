@@ -4,17 +4,20 @@
  * Plugin Name: Storyino
  * Plugin URI: https://github.com/Amirrezaheydari81/storyino
  * Description: پلاگین استوری وردپرس با شورت‌کد [storyino] و انتخاب تصویر/ویدیو از کتابخانه رسانه
- * Version: 1.1.6
+ * Version: 1.1.8
+ * Requires at least: 6.3
+ * Requires PHP: 7.4
  * Author: AmirrezaHeydari
  * Author URI: https://github.com/Amirrezaheydari81
  * License: GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: storyino
  * Domain Path: /languages
  */
 
 defined('ABSPATH') || exit;
 
-define('STORYINO_VERSION', '1.1.6');
+define('STORYINO_VERSION', '1.1.8');
 define('STORYINO_PATH', plugin_dir_path(__FILE__));
 define('STORYINO_URL', plugin_dir_url(__FILE__));
 define('STORYINO_OPTION_IDS', 'storyino_story_ids');
@@ -31,7 +34,8 @@ add_action('init', function () {
     load_plugin_textdomain('storyino', false, dirname(plugin_basename(__FILE__)) . '/languages');
 });
 
-add_action('wp_enqueue_scripts', function () {
+function storyino_register_frontend_assets()
+{
     $suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 
     wp_register_style(
@@ -55,4 +59,5 @@ add_action('wp_enqueue_scripts', function () {
     wp_localize_script('storyino', 'storyinoUi', [
         'useVazir' => storyino_get_vazir_ui() ? 1 : 0,
     ]);
-});
+}
+add_action('wp_enqueue_scripts', 'storyino_register_frontend_assets');

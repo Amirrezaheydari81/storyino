@@ -131,6 +131,11 @@ function storyino_render_settings_page()
 
             storyino_save_icon_animation(isset($_POST['storyino_icon_animation']));
             storyino_save_vazir_ui(isset($_POST['storyino_vazir_ui']));
+            storyino_save_show_title(isset($_POST['storyino_show_title']));
+
+            if (isset($_POST['storyino_title_color'])) {
+                storyino_save_title_color(sanitize_key($_POST['storyino_title_color']));
+            }
 
             $saved = true;
         }
@@ -141,6 +146,8 @@ function storyino_render_settings_page()
     $button_style   = storyino_get_button_style();
     $icon_animation = storyino_get_icon_animation();
     $vazir_ui       = storyino_get_vazir_ui();
+    $show_title     = storyino_get_show_title();
+    $title_color    = storyino_get_title_color();
 
     if (empty($categories)) {
         $categories = [
@@ -257,6 +264,35 @@ function storyino_render_settings_page()
                                         <span class="stn:text-sm stn:font-medium stn:text-zinc-800"><?php esc_html_e('فونت وزیرمتن برای عنوان دایره و دکمه لینک', 'storyino'); ?></span>
                                     </label>
                                     <p class="stn:mt-1.5 stn:text-xs stn:text-zinc-500"><?php esc_html_e('اگر خاموش باشد، عنوان دایره استوری و دکمه لینک داخل پلیر از فونت قالب استفاده می‌کنند.', 'storyino'); ?></p>
+                                </div>
+
+                                <div>
+                                    <label class="stn:inline-flex stn:cursor-pointer stn:items-center stn:gap-3">
+                                        <input type="checkbox" name="storyino_show_title" value="1" class="stn:peer stn:sr-only" <?php checked($show_title); ?>>
+                                        <span class="stn-toggle-track stn:relative stn:h-6 stn:w-10 stn:shrink-0 stn:rounded-full stn:transition-colors stn:after:absolute stn:after:top-0.5 stn:after:start-0.5 stn:after:h-5 stn:after:w-5 stn:after:rounded-full stn:after:bg-white stn:after:shadow-sm stn:after:transition-all stn:peer-checked:after:start-[1.125rem]"></span>
+                                        <span class="stn:text-sm stn:font-medium stn:text-zinc-800"><?php esc_html_e('نمایش عنوان استوری', 'storyino'); ?></span>
+                                    </label>
+                                    <p class="stn:mt-1.5 stn:text-xs stn:text-zinc-500"><?php esc_html_e('اگر خاموش باشد، نام دسته زیر دایره استوری نمایش داده نمی‌شود.', 'storyino'); ?></p>
+                                </div>
+
+                                <div>
+                                    <span class="stn:mb-1.5 stn:block stn:text-sm stn:font-medium stn:text-zinc-800">
+                                        <?php esc_html_e('رنگ عنوان استوری', 'storyino'); ?>
+                                    </span>
+                                    <div class="stn:inline-flex stn:rounded-full stn:border stn:border-fuchsia-100 stn:bg-fuchsia-50/70 stn:p-1">
+                                        <label class="stn:m-0 stn:cursor-pointer">
+                                            <input type="radio" name="storyino_title_color" value="black" class="stn:peer stn:sr-only" <?php checked($title_color, 'black'); ?>>
+                                            <span class="stn:block stn:rounded-full stn:px-3.5 stn:py-1.5 stn:text-sm stn:font-medium stn:text-fuchsia-700/60 stn:transition-colors stn:peer-checked:bg-white stn:peer-checked:text-fuchsia-700 stn:peer-checked:shadow-sm">
+                                                <?php esc_html_e('مشکی', 'storyino'); ?>
+                                            </span>
+                                        </label>
+                                        <label class="stn:m-0 stn:cursor-pointer">
+                                            <input type="radio" name="storyino_title_color" value="white" class="stn:peer stn:sr-only" <?php checked($title_color, 'white'); ?>>
+                                            <span class="stn:block stn:rounded-full stn:px-3.5 stn:py-1.5 stn:text-sm stn:font-medium stn:text-fuchsia-700/60 stn:transition-colors stn:peer-checked:bg-white stn:peer-checked:text-fuchsia-700 stn:peer-checked:shadow-sm">
+                                                <?php esc_html_e('سفید', 'storyino'); ?>
+                                            </span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 

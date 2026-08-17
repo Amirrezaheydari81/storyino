@@ -10,3 +10,5 @@ delete_option('storyino_link_label');
 delete_option('storyino_button_style');
 delete_option('storyino_icon_animation');
 delete_option('storyino_vazir_ui');
+delete_option('storyino_show_title');
+delete_option('storyino_title_color');

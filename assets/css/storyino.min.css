@@ -58,6 +58,10 @@ to{transform:rotate(360deg)}
 .storyino-ring-avatar img,.storyino-ring-fallback{width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important;border:2.5px solid #fff!important;background:#f4f4f5!important;display:block!important;box-sizing:border-box!important}
 .storyino-ring-fallback{background:radial-gradient(circle at 30% 30%,#fff 0 18%,transparent 19%),linear-gradient(180deg,#fce7f3,#ede9fe)!important}
 .storyino-ring-label{display:block!important;max-width:78px!important;color:inherit!important;font-family:inherit!important;font-size:12px!important;font-weight:600!important;line-height:1.3!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+.storyino-tray.storyino-hide-title .storyino-ring{gap:0!important}
+.storyino-tray.storyino-hide-title .storyino-ring-label{display:none!important}
+.storyino-tray.storyino-title-black .storyino-ring-label{color:#111!important}
+.storyino-tray.storyino-title-white .storyino-ring-label{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.45)}
 @font-face{font-family:Vazirmatn;font-style:normal;font-weight:400;font-display:swap;src:url("../fonts/Vazirmatn-Medium.woff2") format("woff2")}
 @font-face{font-family:Vazirmatn;font-style:normal;font-weight:500;font-display:swap;src:url("../fonts/Vazirmatn-Medium.woff2") format("woff2")}
 @font-face{font-family:Vazirmatn;font-style:normal;font-weight:600;font-display:swap;src:url("../fonts/Vazirmatn-Medium.woff2") format("woff2")}

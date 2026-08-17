@@ -123,7 +123,19 @@ function storyino_render_tray($rings)
         return '';
     }
 
-    return '<div class="storyino-tray' . (storyino_get_vazir_ui() ? ' storyino-use-vazir' : '') . '" dir="rtl">' . implode('', $rings) . '</div>';
+    $classes = ['storyino-tray'];
+
+    if (storyino_get_vazir_ui()) {
+        $classes[] = 'storyino-use-vazir';
+    }
+
+    if (! storyino_get_show_title()) {
+        $classes[] = 'storyino-hide-title';
+    }
+
+    $classes[] = 'storyino-title-' . storyino_get_title_color();
+
+    return '<div class="' . esc_attr(implode(' ', $classes)) . '" dir="rtl">' . implode('', $rings) . '</div>';
 }
 
 function storyino_render_ring($config, $label, $cover_url)
@@ -144,12 +156,16 @@ function storyino_render_ring($config, $label, $cover_url)
         $avatar = '<span class="storyino-ring-fallback" aria-hidden="true"></span>';
     }
 
+    $title = storyino_get_show_title()
+        ? '<span class="storyino-ring-label">' . esc_html($label) . '</span>'
+        : '';
+
     return sprintf(
-        '<button type="button" class="storyino-ring" data-storyino="%s" aria-label="%s"><span class="storyino-ring-avatar">%s</span><span class="storyino-ring-label">%s</span></button>',
+        '<button type="button" class="storyino-ring" data-storyino="%s" aria-label="%s"><span class="storyino-ring-avatar">%s</span>%s</button>',
         $json,
         esc_attr($label),
         $avatar,
-        esc_html($label)
+        $title
     );
 }
 

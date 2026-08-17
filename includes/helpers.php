@@ -431,6 +431,32 @@ function storyino_save_vazir_ui($value)
     update_option('storyino_vazir_ui', (bool) $value, false);
 }
 
+function storyino_get_show_title()
+{
+    $value = get_option('storyino_show_title', '1');
+
+    return $value === '1' || $value === 1 || $value === true;
+}
+
+function storyino_save_show_title($value)
+{
+    update_option('storyino_show_title', $value ? '1' : '0', false);
+}
+
+function storyino_get_title_color()
+{
+    $color = get_option('storyino_title_color', 'black');
+
+    return in_array($color, ['black', 'white'], true) ? $color : 'black';
+}
+
+function storyino_save_title_color($color)
+{
+    $color = in_array($color, ['black', 'white'], true) ? $color : 'black';
+
+    update_option('storyino_title_color', $color, false);
+}
+
 function storyino_sanitize_slug($slug)
 {
     $slug = sanitize_title((string) $slug);
