@@ -4,139 +4,151 @@ Tags: stories, instagram, shortcode, video, gallery
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.9
+Stable tag: 1.1.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Instagram-style image and video stories for WordPress, with categories, shortcodes, and media library support.
+استوری تصویر و ویدیو برای وردپرس، شبیه اینستاگرام، با دسته‌بندی، شورت‌کد و انتخاب مستقیم از کتابخانه رسانه.
 
-== Description ==
+== توضیحات ==
 
-Storyino shows image and video stories as a horizontal row of circles, similar to Instagram. Each category has its own cover image and shortcode. Clicking a circle opens a full-screen player.
+Storyino استوری‌های تصویر و ویدیو را به‌صورت حلقه‌های افقی (مشابه اینستاگرام) نمایش می‌دهد. هر دسته یک دایره با تصویر کاور و شورت‌کد اختصاصی دارد. با کلیک روی دایره، پلیر تمام‌صفحه باز می‌شود.
 
-The plugin UI is Persian (RTL). CSS, JavaScript, and the Vazirmatn font are loaded from the plugin folder. Nothing is loaded from a CDN.
+رابط کاربری فارسی (RTL) است. CSS، جاوااسکریپت و فونت وزیرمتن از داخل خود پلاگین بارگذاری می‌شوند و هیچ چیزی از CDN لود نمی‌شود.
 
-= Features =
+= امکانات =
 
-* Story categories with a circular cover image and a dedicated shortcode
-* `[storyino]` for all categories and `[storyino cat="slug"]` for one category
-* Images and videos from the WordPress media library
-* Optional destination link on each story item
-* Drag-and-drop order for categories and items
-* Video frame preview in the admin screen
-* Player closes after the last story
-* Prefetch of the next story
-* Optional local Vazirmatn font for circle labels and the link button
-* Small, medium, or large ring size, with horizontal scroll when the row overflows
-* Flat story rings without a drop shadow
-* No CDN dependency for styles, scripts, or fonts
+* دسته‌بندی استوری با تصویر دایره و شورت‌کد اختصاصی
+* شورت‌کد `[storyino]` برای همه دسته‌ها و `[storyino cat="slug"]` برای یک دسته
+* انتخاب تصویر و ویدیو از کتابخانه رسانه وردپرس
+* لینک مقصد جداگانه برای هر آیتم (دکمه پایین استوری)
+* مرتب‌سازی دسته‌ها و آیتم‌ها با کشیدن و رها کردن
+* پیش‌نمایش فریم ویدیو در پنل ادمین
+* بستن خودکار پلیر بعد از آخرین استوری
+* پیش‌بارگذاری استوری بعدی
+* فونت عنوان دایره و دکمه لینک: پیش‌فرض فونت قالب، اختیاری وزیرمتن محلی
+* نمایش یا مخفی کردن عنوان زیر دایره
+* رنگ عنوان استوری: مشکی یا سفید
+* سه اندازه دایره: کوچک، متوسط و بزرگ
+* فلش قبلی و بعدی وقتی دایره‌ها از عرض صفحه بیشتر شوند
+* ظاهر تخت دایره‌ها، بدون سایه
+* بدون وابستگی به CDN برای استایل، اسکریپت و فونت
 
-= Shortcodes =
+= شورت‌کدها =
 
 `[storyino]`
-Shows every category as Instagram-style rings.
+لیست افقی همه دسته‌ها را مثل استوری اینستاگرام نشان می‌دهد.
 
 `[storyino cat="products"]`
-Shows one category.
+فقط همان دسته را نشان می‌دهد.
 
 `[storyino ids="12,18,25"]`
-Plays specific media library attachments.
+فقط فایل‌های رسانه مشخص‌شده را پخش می‌کند.
 
-Optional attributes: `label`, `speed` (KB/s, `0` = real network speed), `duration` (image time in milliseconds).
+پارامترهای اختیاری: `label` (عنوان دایره)، `speed` (شبیه‌سازی سرعت دانلود بر حسب KB/s؛ صفر یعنی سرعت واقعی)، `duration` (مدت نمایش هر عکس به میلی‌ثانیه).
 
-= Source code =
+= کد منبع =
 
-This plugin is licensed under GPLv2 or later.
+این افزونه تحت مجوز GPLv2 یا بالاتر منتشر شده است.
 
-Unminified, human-readable source is included in the plugin:
+کد منبع خوانا (غیر فشرده) داخل افزونه موجود است:
 
-* JavaScript source: `src/js/storyino.js` and `src/js/storyino-admin.js`
-* CSS source: `src/css/storyino.css` and `src/css/storyino-admin.css`
-* Readable copies also ship next to the minified files as `assets/js/storyino.js`, `assets/js/storyino-admin.js`, and `assets/css/storyino.css`
+* جاوااسکریپت: `src/js/storyino.js` و `src/js/storyino-admin.js`
+* CSS: `src/css/storyino.css` و `src/css/storyino-admin.css`
+* نسخه خوانا کنار فایل‌های فشرده: `assets/js/storyino.js`، `assets/js/storyino-admin.js` و `assets/css/storyino.css`
 
-Public repository: https://github.com/Amirrezaheydari81/storyino
+مخزن عمومی: https://github.com/Amirrezaheydari81/storyino
 
-To rebuild minified assets:
+برای ساخت مجدد فایل‌های فشرده:
 
 `npm install`
 `npm run build`
 
-Build tools (devDependencies only, not loaded on the site): esbuild, PostCSS, Tailwind CSS, and clean-css. See `package.json` and `build.js`.
+ابزارهای بیلد (فقط devDependencies، روی سایت بارگذاری نمی‌شوند): esbuild، PostCSS، Tailwind CSS و clean-css. جزئیات در `package.json` و `build.js`.
 
-= Third-party resources =
+= منابع شخص ثالث =
 
-* Vazirmatn font (SIL Open Font License), bundled as `assets/fonts/Vazirmatn-Medium.woff2`: https://github.com/rastikerdar/vazirmatn
-* jQuery and jQuery UI Sortable: WordPress core
-* Tailwind CSS (MIT): used only at build time for the admin stylesheet
+* فونت وزیرمتن (مجوز SIL Open Font)، فایل `assets/fonts/Vazirmatn-Medium.woff2`: https://github.com/rastikerdar/vazirmatn
+* jQuery و jQuery UI Sortable: هسته وردپرس
+* Tailwind CSS (مجوز MIT): فقط در زمان بیلد برای استایل ادمین استفاده می‌شود
 
-== Installation ==
+== نصب ==
 
-1. Upload the `storyino` folder to `/wp-content/plugins/`.
-2. Activate the plugin through the Plugins screen.
-3. Open **Storyino** in the admin menu.
-4. Create a category, set a cover image, and add media.
-5. Place `[storyino]` in a post, page, or a Shortcode widget.
+1. پوشه `storyino` را در مسیر `/wp-content/plugins/` آپلود کنید.
+2. افزونه را از صفحه افزونه‌ها فعال کنید.
+3. از منوی **Storyino** در پیشخوان وارد تنظیمات شوید.
+4. یک دسته بسازید، تصویر دایره بگذارید و تصویر/ویدیو اضافه کنید.
+5. شورت‌کد `[storyino]` را در برگه، نوشته یا ویجت Shortcode قرار دهید.
 
-== Frequently Asked Questions ==
+== سوالات متداول ==
 
-= Where is the unminified JavaScript? =
+= کد جاوااسکریپت غیر فشرده کجاست؟ =
 
-In `src/js/`. Matching readable files are also in `assets/js/storyino.js` and `assets/js/storyino-admin.js`. Minified files use the `.min.js` suffix. The same code is on GitHub: https://github.com/Amirrezaheydari81/storyino
+در پوشه `src/js/`. همچنین نسخه خوانا در `assets/js/storyino.js` و `assets/js/storyino-admin.js` موجود است. فایل‌های فشرده پسوند `.min.js` دارند. کد کامل در گیت‌هاب هم هست: https://github.com/Amirrezaheydari81/storyino
 
-= Does the plugin load scripts from a CDN? =
+= آیا افزونه اسکریپت یا استایلی از CDN بارگذاری می‌کند؟ =
 
-No. Styles, scripts, and the optional Vazirmatn font are local files in `assets/`.
+خیر. استایل‌ها، اسکریپت‌ها و فونت وزیرمتن همگی فایل‌های محلی داخل پوشه `assets/` هستند.
 
-= Why is video muted? =
+= چرا ویدیو بی‌صداست؟ =
 
-Browsers block autoplay with sound. Stories play muted so the player can start without a click.
+مرورگرها پخش خودکار با صدا را مسدود می‌کنند. استوری‌ها بی‌صدا پخش می‌شوند تا پلیر بدون نیاز به کلیک کاربر شروع به کار کند.
 
-= The story circles do not appear =
+= دایره‌های استوری دیده نمی‌شوند =
 
-Confirm the plugin is active, the shortcode is in the content, the category has at least one image or video, and the theme calls `wp_footer()`.
+بررسی کنید: افزونه فعال است؟ شورت‌کد در محتوا قرار دارد؟ دسته ذخیره شده و حداقل یک تصویر یا ویدیو دارد؟ قالب تابع `wp_footer()` را صدا می‌زند؟
 
-== Screenshots ==
+= فلش‌های قبلی و بعدی کی ظاهر می‌شوند؟ =
 
-1. Category settings in the admin dashboard.
-2. Story rings on the front end.
-3. Full-screen story player.
+وقتی تعداد دایره‌ها از عرض صفحه بیشتر شود، فلش‌های ناوبری به‌صورت خودکار ظاهر می‌شوند.
 
-== Changelog ==
+== اسکرین‌شات‌ها ==
+
+1. تنظیمات دسته‌بندی در داشبورد ادمین.
+2. دایره‌های استوری در سایت.
+3. پلیر تمام‌صفحه استوری.
+
+== تغییرات ==
+
+= 1.1.12 =
+* فلش قبلی و بعدی برای جابه‌جایی بین دایره‌ها وقتی از عرض صفحه بیشتر شوند.
+* رفع مشکل اسکرول افقی با قالب‌ها و صفحه‌سازها.
 
 = 1.1.9 =
-* Added small, medium, and large sizes for story rings.
-* Story row scrolls horizontally when rings overflow the page width.
-* Removed the drop shadow behind story rings for a flat look.
+* سه اندازه کوچک، متوسط و بزرگ برای دایره‌های استوری.
+* حذف سایه پشت دایره‌ها برای ظاهر تخت.
 
 = 1.1.8 =
-* Added a setting to show or hide the story category title under each ring.
-* Added a setting to set the story title color to black or white.
+* گزینه نمایش یا مخفی کردن عنوان دسته زیر دایره.
+* گزینه رنگ عنوان: مشکی یا سفید.
 
 = 1.1.7 =
-* Document public source, build steps, and third-party assets in readme.txt.
-* Ship unminified JS/CSS next to minified files for WordPress.org review.
-* Register front-end assets with a named `wp_enqueue_scripts` callback.
+* فایل readme.txt و سورس خوانا کنار فایل‌های فشرده برای بازبینی مخزن وردپرس.
+* ثبت اسکریپت‌ها با `wp_enqueue_scripts`.
 
 = 1.1.6 =
-* Story categories with cover images and per-category shortcodes.
-* Auto-close the player after the last story.
-* Prefetch the next story and load media at the visitor's network speed.
-* Optional local Vazirmatn font for ring labels and the link button.
-* Safer URL and attachment sanitization.
+* دسته‌بندی استوری با تصویر کاور و شورت‌کد اختصاصی.
+* بستن خودکار پلیر بعد از آخرین استوری.
+* پیش‌بارگذاری استوری بعدی و دانلود با سرعت واقعی کاربر.
+* فونت وزیرمتن محلی اختیاری.
+* بهبود امنیت لینک‌ها و فایل‌های رسانه.
 
 = 1.0.1 =
-* Asset minification and per-item story links.
+* فشرده‌سازی فایل‌ها و لینک مقصد برای هر آیتم.
 
 = 1.0.0 =
-* First release.
+* اولین نسخه.
 
-== Upgrade Notice ==
+== اطلاعیه ارتقا ==
+
+= 1.1.12 =
+فلش ناوبری برای ردیف استوری و رفع مشکل اسکرول با قالب‌ها.
 
 = 1.1.9 =
-Adds story ring size options, horizontal scrolling when the row overflows, and flat rings without a drop shadow.
+اندازه دایره قابل تنظیم و ظاهر تخت بدون سایه.
 
 = 1.1.8 =
-Adds options to hide story titles and choose black or white title color.
+نمایش/مخفی عنوان و انتخاب رنگ مشکی یا سفید.
 
 = 1.1.7 =
-Adds WordPress.org readme.txt and ships readable source next to minified assets.
+فایل readme.txt و سورس خوانا برای مخزن وردپرس.
